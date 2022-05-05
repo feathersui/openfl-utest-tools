@@ -52,6 +52,72 @@ jobs:
       working-directory: samples/custom-tests-source-path
       run: haxelib run openfl-utest-tools test hl --source tests/src
 
+  samples-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: krdlab/setup-haxe@v1
+      with:
+        haxe-version: 4.2.5
+    - name: Set up Haxelib dependencies
+      run: |
+        haxelib install lime --quiet
+        haxelib install openfl --quiet
+        haxelib install utest --quiet
+        haxelib install hxargs --quiet
+        haxelib install hxcpp --quiet
+        haxelib dev openfl-utest-tools $GITHUB_WORKSPACE
+    - name: "Run Tests: samples/basic"
+      working-directory: samples/basic
+      run: haxelib run openfl-utest-tools test mac
+    - name: "Run Tests: samples/custom-tests-source-path"
+      working-directory: samples/custom-tests-source-path
+      run: haxelib run openfl-utest-tools test mac --source tests/src
+
+  samples-mac:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: krdlab/setup-haxe@v1
+      with:
+        haxe-version: 4.2.5
+    - name: Set up Haxelib dependencies
+      run: |
+        haxelib install lime --quiet
+        haxelib install openfl --quiet
+        haxelib install utest --quiet
+        haxelib install hxargs --quiet
+        haxelib install hxcpp --quiet
+        haxelib dev openfl-utest-tools $GITHUB_WORKSPACE
+    - name: "Run Tests: samples/basic"
+      working-directory: samples/basic
+      run: haxelib run openfl-utest-tools test mac
+    - name: "Run Tests: samples/custom-tests-source-path"
+      working-directory: samples/custom-tests-source-path
+      run: haxelib run openfl-utest-tools test mac --source tests/src
+
+  samples-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: krdlab/setup-haxe@v1
+      with:
+        haxe-version: 4.2.5
+    - name: Set up Haxelib dependencies
+      run: |
+        haxelib install lime --quiet
+        haxelib install openfl --quiet
+        haxelib install utest --quiet
+        haxelib install hxargs --quiet
+        haxelib install hxcpp --quiet
+        haxelib dev openfl-utest-tools ${{ github.workspace }}
+    - name: "Run Tests: samples/basic"
+      working-directory: samples/basic
+      run: haxelib run openfl-utest-tools test windows
+    - name: "Run Tests: samples/custom-tests-source-path"
+      working-directory: samples/custom-tests-source-path
+      run: haxelib run openfl-utest-tools test windows --source tests/src
+
   samples-air:
     runs-on: windows-latest
     steps:
@@ -65,7 +131,7 @@ jobs:
         haxelib install openfl --quiet
         haxelib install utest --quiet
         haxelib install hxargs --quiet
-        haxelib dev openfl-utest-tools $GITHUB_WORKSPACE
+        haxelib dev openfl-utest-tools ${{ github.workspace }}
     - uses: joshtynjala/setup-adobe-air-action@v1
     - run: haxelib run openfl config AIR_SDK ${{ env.AIR_HOME }}
     - name: "Run Tests: samples/basic"
