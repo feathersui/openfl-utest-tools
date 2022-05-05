@@ -10,7 +10,7 @@ on:
 
 jobs:
 
-  test:
+  samples-neko:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -24,6 +24,9 @@ jobs:
         haxelib install utest --quiet
         haxelib install hxargs --quiet
         haxelib dev openfl-utest-tools $GITHUB_WORKSPACE
-    - name: Run Tests
+    - name: "Run Tests: samples/basic"
       working-directory: samples/basic
       run: haxelib run openfl-utest-tools test neko
+    - name: "Run Tests: samples/custom-tests-source-path"
+      working-directory: samples/custom-tests-source-path
+      run: haxelib run openfl-utest-tools test neko --source tests/src
