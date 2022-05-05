@@ -52,6 +52,28 @@ jobs:
       working-directory: samples/custom-tests-source-path
       run: haxelib run openfl-utest-tools test hl --source tests/src
 
+  samples-html5:
+    # doesn't work on ubuntu-latest due to driver issues with firefox
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: krdlab/setup-haxe@v1
+      with:
+        haxe-version: 4.2.5
+    - name: Set up Haxelib dependencies
+      run: |
+        haxelib install lime --quiet
+        haxelib install openfl --quiet
+        haxelib install utest --quiet
+        haxelib install hxargs --quiet
+        haxelib dev openfl-utest-tools $GITHUB_WORKSPACE
+    - name: "Run Tests: samples/basic"
+      working-directory: samples/basic
+      run: haxelib run openfl-utest-tools test html5
+    - name: "Run Tests: samples/custom-tests-source-path"
+      working-directory: samples/custom-tests-source-path
+      run: haxelib run openfl-utest-tools test html5 --source tests/src
+
   samples-linux:
     runs-on: ubuntu-latest
     steps:
