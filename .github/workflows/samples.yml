@@ -30,3 +30,47 @@ jobs:
     - name: "Run Tests: samples/custom-tests-source-path"
       working-directory: samples/custom-tests-source-path
       run: haxelib run openfl-utest-tools test neko --source tests/src
+
+  samples-hashlink:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: krdlab/setup-haxe@v1
+      with:
+        haxe-version: 4.2.5
+    - name: Set up Haxelib dependencies
+      run: |
+        haxelib install lime --quiet
+        haxelib install openfl --quiet
+        haxelib install utest --quiet
+        haxelib install hxargs --quiet
+        haxelib dev openfl-utest-tools $GITHUB_WORKSPACE
+    - name: "Run Tests: samples/basic"
+      working-directory: samples/basic
+      run: haxelib run openfl-utest-tools test hl
+    - name: "Run Tests: samples/custom-tests-source-path"
+      working-directory: samples/custom-tests-source-path
+      run: haxelib run openfl-utest-tools test hl --source tests/src
+
+  samples-air:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: krdlab/setup-haxe@v1
+      with:
+        haxe-version: 4.2.5
+    - name: Set up Haxelib dependencies
+      run: |
+        haxelib install lime --quiet
+        haxelib install openfl --quiet
+        haxelib install utest --quiet
+        haxelib install hxargs --quiet
+        haxelib dev openfl-utest-tools $GITHUB_WORKSPACE
+    - uses: joshtynjala/setup-adobe-air-action@v1
+    - run: haxelib run openfl config AIR_SDK ${{ env.AIR_HOME }}
+    - name: "Run Tests: samples/basic"
+      working-directory: samples/basic
+      run: haxelib run openfl-utest-tools test air
+    - name: "Run Tests: samples/custom-tests-source-path"
+      working-directory: samples/custom-tests-source-path
+      run: haxelib run openfl-utest-tools test air --source tests/src
