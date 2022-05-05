@@ -269,9 +269,50 @@ class Run {
 			Sys.println("Running Tests...");
 		}
 		if (_limeTargetPlatform == "html5") {
+			installPlaywright();
 			runTestsHtml5();
 		} else {
 			runTestsNonHtml5();
+		}
+	}
+
+	private static function installPlaywright():Void {
+		var stdoutDone = false;
+		var stderrDone = false;
+		Sys.setCwd(_templatesPath);
+		var process = new Process("npx", ["playwright", "install"]);
+
+		sys.thread.Thread.create(() -> {
+			while (true) {
+				try {
+					var line = process.stdout.readLine();
+					Sys.stdout().writeString('${line}\n', UTF8);
+				} catch (e:Eof) {
+					break;
+				}
+			}
+			stdoutDone = true;
+		});
+		sys.thread.Thread.create(() -> {
+			while (true) {
+				try {
+					var line = process.stderr.readLine();
+					Sys.stderr().writeString('${line}\n', UTF8);
+				} catch (e:Eof) {
+					break;
+				}
+			}
+			stderrDone = true;
+		});
+
+		while (!stdoutDone || !stderrDone) {
+			Sys.sleep(1);
+		}
+		var exitCode = process.exitCode(true);
+
+		if (exitCode != 0) {
+			Sys.stderr().writeString('Playwright initialization failed. Process exited with code: ${exitCode}\n', UTF8);
+			Sys.exit(exitCode);
 		}
 	}
 
