@@ -280,7 +280,11 @@ class Run {
 		var stdoutDone = false;
 		var stderrDone = false;
 		Sys.setCwd(_templatesPath);
-		var process = new Process("npx", ["playwright", "install"]);
+		var command = "node_modules/.bin/playwright";
+		if (Sys.systemName() == "Windows") {
+			command += ".cmd";
+		}
+		var process = new Process(command, ["install"]);
 
 		sys.thread.Thread.create(() -> {
 			while (true) {
