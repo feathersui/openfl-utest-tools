@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<meta title="openfl-utest-tools basic sample" package="com.example.tests" />
+	<app main="Main" />
+	<source path="src" />
+	<haxelib name="openfl" />
+</project>
