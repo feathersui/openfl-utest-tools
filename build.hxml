@@ -1,0 +1,4 @@
+--main com.feathersui.utest.tools.Run
+--class-path src
+--library hxargs
+--interp

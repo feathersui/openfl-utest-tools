@@ -1,0 +1,22 @@
+{
+	"name": "openfl-utest-tools",
+	"url": "https://github.com/feathersui/openfl-utest-tools",
+	"license": "MIT",
+	"tags": [
+		"openfl",
+		"utest",
+		"unit-testing",
+		"cli"
+	],
+	"description": "Command line tools for running utest automated tests with OpenFL",
+	"version": "1.0.0-alpha.1",
+	"main": "com.feathersui.utest.tools.Run",
+	"classPath": "src",
+	"dependencies": {
+		"hxargs": "",
+		"utest": "",
+		"openfl": ""
+	},
+	"contributors": ["bowlerhat"],
+	"releasenote": "Preview build"
+}
