@@ -154,7 +154,10 @@ jobs:
         haxelib install utest --quiet
         haxelib install hxargs --quiet
         haxelib dev openfl-utest-tools ${{ github.workspace }}
-    - uses: joshtynjala/setup-adobe-air-action@v1
+    - uses: joshtynjala/setup-adobe-air-action@v2
+      with:
+        air-version: "33.1"
+        accept-license: true
     - run: haxelib run openfl config AIR_SDK ${{ env.AIR_HOME }}
     - name: "Run Tests: samples/basic"
       working-directory: samples/basic
